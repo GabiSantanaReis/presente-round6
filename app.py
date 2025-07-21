@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import random
+import os
 
 # Inicializa o estado da sessão
 if 'step' not in st.session_state:
@@ -16,23 +17,63 @@ if 'start_time' not in st.session_state:
 def proxima_pagina():
     st.session_state.step += 1
 
-st.set_page_config(page_title="Round 6 - Gabrielle", page_icon="🎮")
 # Estilo visual Round 6
+def aplicar_estilo_geral(background_url):
+    st.markdown(f"""
+        <style>
+        .stApp {{
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                        url('{background_url}');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }}
+        div.stButton > button:first-child {{
+            background-color: #c71585;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 28px;
+            box-shadow: 0px 0px 12px #c71585;
+            transition: 0.3s ease;
+        }}
+        div.stButton > button:first-child:hover {{
+            background-color: #d94bbb;
+            box-shadow: 0px 0px 18px #d94bbb;
+            transform: scale(1.05);
+        }}
+        </style>
+    """, unsafe_allow_html=True)
 
+def tocar_audio(url):
+    st.markdown(f"""
+        <audio autoplay loop>
+            <source src="{url}" type="audio/mpeg">
+        </audio>
+    """, unsafe_allow_html=True)
+
+def mostrar_intro_fase(step, titulo, descricao):
+    flag = f"fase{step}_iniciada"
+    if flag not in st.session_state:
+        st.session_state[flag] = False
+
+    if not st.session_state[flag]:
+        st.markdown(f"## {titulo}")
+        st.markdown(f"<p style='white-space:pre-line;'>{descricao}</p>", unsafe_allow_html=True)
+        if st.button("🔓 Iniciar desafio"):
+            st.session_state[flag] = True
+            st.rerun()
+        return False
+    return True
+
+st.set_page_config(page_title="Round 6 - Gabrielle", page_icon="🎮")
 
 
 # ========== Etapa 1: Boas-vindas ==========
 if st.session_state.step == 1:
     st.title("Round 6: Desafios Iniciados")
-
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay loop>
-            <source src="audio/squid-game-announcement-sound.mp3" type="audio/mpeg">
-        </audio>
-        """, unsafe_allow_html=True)
-
-
     st.markdown("""
     ### Seja bem-vinda, Jogadora Gabrielle (097).
 
@@ -51,987 +92,647 @@ if st.session_state.step == 1:
     🎮 **Você aceita participar do jogo?**  
     """)
     
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url("https://images3.alphacoders.com/118/thumb-1920-1181423.jpg");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-        .css-18e3th9 {
-            background-color: rgba(0, 0, 0, 0.0);
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown("""
-        <style>
-        div.stButton > button:first-child {
-            background-color: #c71585; /* magenta escuro */
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb; /* magenta mais vibrante */
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
+    aplicar_estilo_geral("https://images3.alphacoders.com/118/thumb-1920-1181423.jpg")
     st.button("Avançar para o primeiro desafio ▲ ● ■", on_click=proxima_pagina)
 
 elif st.session_state.step == 2:
-    st.header("🟪 Desafio 1: Corrida pela Sobrevivência")
 
-    st.markdown(""" 
-        Você tem segundos.
+    aplicar_estilo_geral("https://images5.alphacoders.com/117/thumb-1920-1177232.jpg")
 
+    if mostrar_intro_fase(2, "🚦 Desafio 1: Corrida pela Sobrevivência", """ Você tem segundos.
         A boneca já está de costas. O campo está silencioso.
-
         📢 Assim que a voz ecoar _“Batatinha frita 1, 2, 3...”_, você precisará decidir rapidamente: **O que é verdade. O que é mentira.**
-
         🎧 **Aumente o volume** do celular. Os sons são pistas. E ameaças.  
         Errar uma resposta equivale a tropeçar no campo — e você sabe o que acontece com quem cai.
-
         💬 São afirmações que testam sua memória, lógica e sangue frio.  
         Você não pode parar. Não pode hesitar.
-
         Se responder certo: avança.  
         Se responder errado... o jogo reinicia. E você perde tempo precioso.
-
         Está preparada para correr — com a mente? 🧠💨  
         Seu presente está cada vez mais perto. Mas também... mais protegido.
+        ▲ ● ■"""):
 
-        ▲ ● ■""")
+        
+        tocar_audio("https://www.myinstants.com/media/sounds/squid-game-doll-music.mp3")
 
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url("https://images5.alphacoders.com/117/thumb-1920-1177232.jpg");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    st.markdown("""
-        <style>
-        /* Torna o texto das opções 'Verdadeiro' e 'Falso' branco */
-        div[data-baseweb="radio"] > div {
-            color: white !important;
-        }
-
-        /* Torna o texto das perguntas branco */
-        .stRadio label {
-            color: white !important;
-        }
-
-        /* Torna o texto do item selecionado branco */
-        div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
-            background-color: #c71585 !important;
-            border-color: #ff9ce6 !important;
-            color: white !important;
-        }
-
-        /* Borda e efeito ao passar o mouse */
-        div[data-baseweb="radio"] div[role="radio"]:hover {
-            border-color: #ffffff !important;
-            color: white !important;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-
-    # Botão para iniciar o desafio
-    if 'desafio1_iniciado' not in st.session_state:
-        if st.button("✅ Iniciar desafio"):
+        # Botão para iniciar o desafio
+        if 'desafio1_iniciado' not in st.session_state:
+            
             st.session_state.desafio1_iniciado = True
             st.session_state.start_time = time.time()
             st.session_state.finished = False
             st.session_state.acertou_tudo = False
             st.rerun()
 
-    # Conteúdo principal após clique
-    if st.session_state.get("desafio1_iniciado"):
-        tempo_passado = time.time() - st.session_state.start_time
-        tempo_restante = int(20 - tempo_passado)
+        # Conteúdo principal após clique
+        if st.session_state.get("desafio1_iniciado"):
+            tempo_passado = time.time() - st.session_state.start_time
+            tempo_restante = int(20 - tempo_passado)
 
-        st.markdown("""
-            <audio autoplay loop>
-                <source src="https://www.myinstants.com/media/sounds/squid-game-doll-music.mp3" type="audio/mpeg">
-            </audio>
-        """, unsafe_allow_html=True)
 
-        if not st.session_state.finished:
-            st.markdown(f"""
-                <div style="text-align:center; font-size:26px; font-weight:bold; color:#FFB6C1;">
-                    ⏳ Tempo restante: {tempo_restante} segundos
-                </div>
-            """, unsafe_allow_html=True)
+            if not st.session_state.finished:
+                st.markdown(f"""
+                    <div style="text-align:center; font-size:26px; font-weight:bold; color:#FFB6C1;">
+                        ⏳ Tempo restante: {tempo_restante} segundos
+                    </div>
+                """, unsafe_allow_html=True)
 
-        perguntas = {
-            "O número do jogador vencedor é 456.": True,
-            "O segundo jogo apresentado na série é a corrida de sacos.": False,
-            "O símbolo quadrado na máscara representa o nível mais alto entre os soldados.": True,
-            "Gi-hun aposta em corridas de cavalo logo antes de entrar no jogo.": True,
-            "Sae-byeok é uma ex-policial infiltrada no jogo.": False,
-            "No desafio da ponte de vidro, os jogadores podiam escolher entre vidro temperado e vidro comum.": True,
-            "O organizador do jogo revela sua identidade apenas no último episódio.": True,
-            "A moeda usada para recrutar jogadores é o dólar americano.": False,
-            "O jogo da corda exige apenas força física.": False,
-            "A série é ambientada em uma ilha escondida e monitorada por câmeras.": True
-        }
+            perguntas = {
+                "O número do jogador vencedor é 456.": True,
+                "O segundo jogo apresentado na série é a corrida de sacos.": False,
+                "O símbolo quadrado na máscara representa o nível mais alto entre os soldados.": True,
+                "Gi-hun aposta em corridas de cavalo logo antes de entrar no jogo.": True,
+                "Sae-byeok é uma ex-policial infiltrada no jogo.": False,
+                "No desafio da ponte de vidro, os jogadores podiam escolher entre vidro temperado e vidro comum.": True,
+                "O organizador do jogo revela sua identidade apenas no último episódio.": True,
+                "A moeda usada para recrutar jogadores é o dólar americano.": False,
+                "O jogo da corda exige apenas força física.": False,
+                "A série é ambientada em uma ilha escondida e monitorada por câmeras.": True
+            }
 
-        for pergunta in perguntas:
-            st.radio(pergunta, ["Verdadeiro", "Falso"], key=pergunta)
+            for pergunta in perguntas:
+                st.radio(pergunta, ["Verdadeiro", "Falso"], key=pergunta)
 
-        if not st.session_state.finished:
-            if st.button("Confirmar respostas"):
-                acertou_tudo = True
-                for pergunta, gabarito in perguntas.items():
-                    resposta_usuario = st.session_state.get(pergunta)
-                    correta = "Verdadeiro" if gabarito else "Falso"
-                    if resposta_usuario != correta:
-                        acertou_tudo = False
-                        break
+            if not st.session_state.finished:
+                if st.button("Confirmar respostas"):
+                    acertou_tudo = True
+                    for pergunta, gabarito in perguntas.items():
+                        resposta_usuario = st.session_state.get(pergunta)
+                        correta = "Verdadeiro" if gabarito else "Falso"
+                        if resposta_usuario != correta:
+                            acertou_tudo = False
+                            break
 
-                st.session_state.finished = True
-                st.session_state.acertou_tudo = acertou_tudo
+                    st.session_state.finished = True
+                    st.session_state.acertou_tudo = acertou_tudo
 
-                if acertou_tudo:
-                    st.session_state.score += len(perguntas)
+                    if acertou_tudo:
+                        st.session_state.score += len(perguntas)
 
-                st.rerun()
-
-        else:
-            if st.session_state.acertou_tudo:
-                st.success("🎉 Parabéns! Você acertou todas as respostas!")
-                st.balloons()
-                if st.button("Avançar para o próximo desafio"):
-                    st.session_state.step += 1
-                    for key in ['desafio1_iniciado', 'start_time', 'finished', 'acertou_tudo'] + list(perguntas.keys()):
-                        st.session_state.pop(key, None)
-                    st.rerun()
-            else:
-                st.error("💀 Você perdeu! Respostas incorretas ou tempo esgotado.")
-                if st.button("Tentar de novo"):
-                    st.session_state.step = 1
-                    for key in ['desafio1_iniciado', 'start_time', 'finished', 'acertou_tudo'] + list(perguntas.keys()):
-                        st.session_state.pop(key, None)
                     st.rerun()
 
-        if not st.session_state.finished:
-            if tempo_restante <= 0:
-                st.session_state.finished = True
-                st.session_state.acertou_tudo = False
-                st.rerun()
             else:
-                time.sleep(1)
-                st.rerun()
+                if st.session_state.acertou_tudo:
+                    st.success("🎉 Parabéns! Você acertou todas as respostas!")
+                    st.balloons()
+                    if st.button("Avançar para o próximo desafio"):
+                        st.session_state.step += 1
+                        for key in ['desafio1_iniciado', 'start_time', 'finished', 'acertou_tudo', 'fase2_iniciada'] + list(perguntas.keys()):
+                            st.session_state.pop(key, None)
+                        st.rerun()
+                else:
+                    st.error("💀 Você perdeu! Respostas incorretas ou tempo esgotado.")
+                    if st.button("Tentar de novo"):
+                        st.session_state.step = 1
+                        for key in ['desafio1_iniciado', 'start_time', 'finished', 'acertou_tudo', 'fase2_iniciada'] + list(perguntas.keys()):
+                            st.session_state.pop(key, None)
+                        st.rerun()
+
+            if not st.session_state.finished:
+                if tempo_restante <= 0:
+                    st.session_state.finished = True
+                    st.session_state.acertou_tudo = False
+                    st.rerun()
+                else:
+                    time.sleep(1)
+                    st.rerun()
 
 
 # ========== Etapa 3: Jogo da Memória ==========
 elif st.session_state.step == 3:
-    import random
-    import time
 
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay loop>
-            <source src="https://www.myinstants.com/media/sounds/10-second-squid-game-timer.mp3" type="audio/mpeg">
-        </audio>
-    """, unsafe_allow_html=True)
 
-    # 🎨 Estilo visual
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                        url("https://images.alphacoders.com/118/thumb-1920-1184523.jpg");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
+    aplicar_estilo_geral("https://images.alphacoders.com/118/thumb-1920-1184523.jpg")
 
-    # 🧠 Inicialização da fase
-    if "cards" not in st.session_state:
-        emojis = ['⚫', '⚫', '⬛', '⬛', '🎮', '🎮', '💀', '💀']
-        random.shuffle(emojis)
-        st.session_state.cards = emojis
-        st.session_state.revealed = [False] * len(emojis)
-        st.session_state.first_choice = None
-        st.session_state.second_choice = None
-        st.session_state.pairs_found = 0
-        st.session_state.message = ""
-        st.session_state.memory_started = time.time()
-        st.session_state.memory_finished = False
-        st.session_state.aguardando_reset = False
-        st.session_state.aguardando_exibicao_par = False
-
-    # ⏳ Timer
-    if not st.session_state.memory_finished:
-        tempo_passado = time.time() - st.session_state.memory_started
-        tempo_restante = int(90 - tempo_passado)
-        if tempo_restante <= 0:
-            st.session_state.memory_finished = True
-            st.session_state.message = "⏰ Tempo esgotado! Você perdeu esse desafio."
-        else:
-            st.markdown(f"""
-                <div style="text-align:center; font-size:26px; font-weight:bold; color:#FFB6C1;">
-                    ⏳ Tempo restante: {tempo_restante} segundos
-                </div>
-            """, unsafe_allow_html=True)
-
-    # 🎭 Introdução
-    st.title("🧠 Desafio 2 – Jogo da Memória: Bolinhas de Gude")
-    st.markdown("""
-    Você está frente a frente com outro jogador. As regras? Simples.
-
+    if mostrar_intro_fase(3, "🧠 Desafio 2: Jogo da Memória", """Você está frente a frente com outro jogador. As regras? Simples.
     Descubra pares idênticos. Se acertar, sobrevive.  
     Se errar... o tempo corre, e você se aproxima do fim.
-
     👁️ Use sua percepção. Sua intuição. E sua memória.
-
     Assim como na sala das bolinhas de gude, cada movimento importa.  
     Cada escolha pode ser sua última.
+    ▲ ● ■"""):
+        
+        tocar_audio("https://www.myinstants.com/media/sounds/girotondo-squidgame.mp3")
 
-    ▲ ● ■
-    """)
+        # 🧠 Inicialização da fase
+        if "cards" not in st.session_state:
+            emojis = ['⚫', '⚫', '⬛', '⬛', '🎮', '🎮', '💀', '💀']
+            random.shuffle(emojis)
+            st.session_state.cards = emojis
+            st.session_state.revealed = [False] * len(emojis)
+            st.session_state.first_choice = None
+            st.session_state.second_choice = None
+            st.session_state.pairs_found = 0
+            st.session_state.message = ""
+            st.session_state.memory_started = time.time()
+            st.session_state.memory_finished = False
+            st.session_state.aguardando_reset = False
+            st.session_state.aguardando_exibicao_par = False
+            st.session_state3 = False
 
-    # 🃏 Cartas
-    cols = st.columns(4)
-    for i in range(len(st.session_state.cards)):
-        with cols[i % 4]:
-            mostrar = st.session_state.revealed[i] or i == st.session_state.first_choice or i == st.session_state.second_choice
-            emoji = st.session_state.cards[i] if mostrar else "❓"
-            if st.button(emoji, key=f"card_{i}", disabled=st.session_state.revealed[i]):
-                if st.session_state.first_choice is None:
-                    st.session_state.first_choice = i
-                elif st.session_state.second_choice is None and i != st.session_state.first_choice:
-                    st.session_state.second_choice = i
+        # ⏳ Timer
+        if not st.session_state.memory_finished:
+            tempo_passado = time.time() - st.session_state.memory_started
+            tempo_restante = int(30 - tempo_passado)
+            if tempo_restante <= 0:
+                st.session_state.memory_finished = True
+                st.session_state.message = "⏰ Tempo esgotado! Você perdeu esse desafio."
+            else:
+                st.markdown(f"""
+                    <div style="text-align:center; font-size:26px; font-weight:bold; color:#FFB6C1;">
+                        ⏳ Tempo restante: {tempo_restante} segundos
+                    </div>
+                """, unsafe_allow_html=True)
 
-    # 🎥 Renderização sequencial
-    if st.session_state.get("aguardando_exibicao_par"):
-        st.session_state.aguardando_exibicao_par = False
-        st.session_state.aguardando_reset = True
-        st.rerun()
+        # 🃏 Cartas
+        cols = st.columns(4)
+        for i in range(len(st.session_state.cards)):
+            with cols[i % 4]:
+                mostrar = st.session_state.revealed[i] or i == st.session_state.first_choice or i == st.session_state.second_choice
+                emoji = st.session_state.cards[i] if mostrar else "❓"
+                if st.button(emoji, key=f"card_{i}", disabled=st.session_state.revealed[i]):
+                    if st.session_state.first_choice is None:
+                        st.session_state.first_choice = i
+                    elif st.session_state.second_choice is None and i != st.session_state.first_choice:
+                        st.session_state.second_choice = i
 
-    elif st.session_state.get("aguardando_reset"):
-        time.sleep(1)
-        st.session_state.first_choice = None
-        st.session_state.second_choice = None
-        st.session_state.aguardando_reset = False
-        st.rerun()
-
-    elif st.session_state.first_choice is not None and st.session_state.second_choice is not None:
-        idx1 = st.session_state.first_choice
-        idx2 = st.session_state.second_choice
-        carta1 = st.session_state.cards[idx1]
-        carta2 = st.session_state.cards[idx2]
-
-        if carta1 == carta2:
-            st.session_state.revealed[idx1] = True
-            st.session_state.revealed[idx2] = True
-            st.session_state.pairs_found += 1
-            st.session_state.message = "Par encontrado! 🎉"
-        else:
-            st.session_state.message = "Não é par, tente novamente. ❌"
-        st.session_state.aguardando_exibicao_par = True
-        st.rerun()
-
-    # 💬 Mensagem atual
-    st.write(st.session_state.message)
-
-    # 🏆 Vitória
-    if st.session_state.pairs_found == len(st.session_state.cards) // 2 and not st.session_state.memory_finished:
-        st.balloons()
-        st.success("Você encontrou todos os pares! Parabéns! 🎊")
-        if st.button("Avançar para a próxima fase"):
-            for key in ['cards', 'revealed', 'first_choice', 'second_choice',
-                        'pairs_found', 'message', 'memory_started',
-                        'memory_finished', 'aguardando_reset', 'aguardando_exibicao_par']:
-                st.session_state.pop(key, None)
-            st.session_state.step += 1
+        # 🎥 Renderização sequencial
+        if st.session_state.get("aguardando_exibicao_par"):
+            st.session_state.aguardando_exibicao_par = False
+            st.session_state.aguardando_reset = True
             st.rerun()
 
-    # 💀 Derrota por tempo
-    if st.session_state.memory_finished and st.session_state.pairs_found < len(st.session_state.cards) // 2:
-        st.error("Você perdeu! Tempo esgotado ou pares insuficientes.")
-        if st.button("Tentar novamente"):
-            for key in ['cards', 'revealed', 'first_choice', 'second_choice',
-                        'pairs_found', 'message', 'memory_started',
-                        'memory_finished', 'aguardando_reset', 'aguardando_exibicao_par']:
-                st.session_state.step = 1
+        elif st.session_state.get("aguardando_reset"):
+            time.sleep(1)
+            st.session_state.first_choice = None
+            st.session_state.second_choice = None
+            st.session_state.aguardando_reset = False
             st.rerun()
+
+        elif st.session_state.first_choice is not None and st.session_state.second_choice is not None:
+            idx1 = st.session_state.first_choice
+            idx2 = st.session_state.second_choice
+            carta1 = st.session_state.cards[idx1]
+            carta2 = st.session_state.cards[idx2]
+
+            if carta1 == carta2:
+                st.session_state.revealed[idx1] = True
+                st.session_state.revealed[idx2] = True
+                st.session_state.pairs_found += 1
+                st.session_state.message = "Par encontrado! 🎉"
+            else:
+                st.session_state.message = "Não é par, tente novamente. ❌"
+            st.session_state.aguardando_exibicao_par = True
+            st.rerun()
+
+        # 💬 Mensagem atual
+        st.write(st.session_state.message)
+
+        # 🏆 Vitória
+        if st.session_state.pairs_found == len(st.session_state.cards) // 2 and not st.session_state.memory_finished:
+            st.balloons()
+            st.success("Você encontrou todos os pares! Parabéns! 🎊")
+            if st.button("Avançar para a próxima fase"):
+                for key in ['cards', 'revealed', 'first_choice', 'second_choice',
+                            'pairs_found', 'message', 'memory_started',
+                            'memory_finished', 'aguardando_reset', 'aguardando_exibicao_par', 'fase3_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state.step += 1
+                st.rerun()
+
+        # 💀 Derrota por tempo
+        if st.session_state.memory_finished and st.session_state.pairs_found < len(st.session_state.cards) // 2:
+            st.error("Você perdeu! Tempo esgotado ou pares insuficientes.")
+            if st.button("Tentar novamente"):
+                for key in ['cards', 'revealed', 'first_choice', 'second_choice',
+                            'pairs_found', 'message', 'memory_started',
+                            'memory_finished', 'aguardando_reset', 'aguardando_exibicao_par', 'fase3_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state3 = False
+                st.session_state.step = 1  # Ou volte para 1 se quiser reiniciar o jogo inteiro
+                st.rerun()
+
 
 
 elif st.session_state.step == 4:
-    st.markdown("""
-        ## 🎲 Desafio 3: Código do Número
 
-        Uma cortina se abre. Você está diante de uma máquina silenciosa.  
-        Ela esconde um único número — entre 1 e 20.
+    aplicar_estilo_geral("https://images2.alphacoders.com/118/thumb-1920-1181149.png")
 
-        Você não sabe o que está em jogo... ainda.
+    if mostrar_intro_fase(4, "🎲 Desafio 3: Código do Número", """
+Uma cortina se abre. Você está diante de uma máquina silenciosa.  
+Ela esconde um único número — entre 1 e 20.
 
-        🧠 Cada palpite é uma escolha.  
-        🔐 Cada tentativa, uma chance que escapa.
+Você terá **4 tentativas** para descobrir o número exato.  
+Se errar, a máquina responde: _Muito alto._ ou _Muito baixo._  
+Mas ela nunca revela se está perto… ou longe.
 
-        Você terá **4 tentativas** para descobrir o número exato.  
-        Se errar, a máquina responde: _Muito alto._ Ou _Muito baixo._  
-        Mas ela nunca revela se está perto… ou longe.
+✖️ Se todas as tentativas falharem, o sistema bloqueia.  
+O jogo continua… **sem você**.
+"""):
 
-        Será que é sorte? Será que é cálculo?
+        tocar_audio("https://www.myinstants.com/media/sounds/squid-game-announcement-sound.mp3")
 
-        ✖️ Se todas as tentativas falharem, o sistema bloqueia.  
-        O jogo continua… **sem você**.
+        # Inicializa estado do jogo
+        if 'target_number' not in st.session_state:
+            st.session_state.target_number = random.randint(1, 20)
+            st.session_state.guesses_left = 4
+            st.session_state.message = ""
+            st.session_state.acertou_numero = False
+            st.session_state.perdeu_numero = False
 
-        Concentre-se. Respire. Aposte no seu instinto.
+        # 👀 Jogo em andamento
+        if not st.session_state.acertou_numero and not st.session_state.perdeu_numero:
+            st.write("Estou pensando em um número entre 1 e 20. Tente adivinhar!")
+            guess = st.number_input("Digite seu palpite:", min_value=1, max_value=20, step=1, key='palpite_numero')
 
-        ▲ ● ■
-        """)
-
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay loop>
-            <source src="https://www.myinstants.com/media/sounds/squid-game-tone.mp3" type="audio/mpeg">
-        </audio>
-    """, unsafe_allow_html=True)
-
-    # 🎨 Estilo visual
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                        url("https://images2.alphacoders.com/118/thumb-1920-1181149.png");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-
-
-    if 'target_number' not in st.session_state:
-        st.session_state.target_number = random.randint(1, 20)
-        st.session_state.guesses_left = 4
-        st.session_state.message = ""
-        st.session_state.acertou_numero = False
-        st.session_state.perdeu_numero = False
-
-    # Jogo em andamento
-    if not st.session_state.acertou_numero and not st.session_state.perdeu_numero:
-        st.write("Estou pensando em um número entre 1 e 20. Tente adivinhar!")
-        guess = st.number_input("Digite seu palpite:", min_value=1, max_value=20, step=1, key='palpite_numero')
-
-        if st.button("Enviar palpite"):
-            if guess == st.session_state.target_number:
-                st.success(f"🎉 Parabéns! Você acertou o número {st.session_state.target_number}!")
-                st.session_state.acertou_numero = True
-
-                # Avança automaticamente
-                for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero']:
-                    st.session_state.pop(key, None)
-                st.session_state.step += 1
-                st.rerun()
-
-            else:
-                st.session_state.guesses_left -= 1
-                if guess < st.session_state.target_number:
-                    st.session_state.message = "Muito baixo! Tente um número maior."
+            if st.button("Enviar palpite"):
+                if guess == st.session_state.target_number:
+                    st.success(f"🎉 Parabéns! Você acertou o número {st.session_state.target_number}!")
+                    st.session_state.acertou_numero = True
                 else:
-                    st.session_state.message = "Muito alto! Tente um número menor."
+                    st.session_state.guesses_left -= 1
+                    if st.session_state.guesses_left == 0:
+                        st.session_state.perdeu_numero = True
+                        st.error(f"💀 Você perdeu! O número era {st.session_state.target_number}.")
+                    else:
+                        dica = "Muito baixo!" if guess < st.session_state.target_number else "Muito alto!"
+                        st.session_state.message = f"{dica} Tente novamente."
 
-                if st.session_state.guesses_left == 0:
-                    st.session_state.perdeu_numero = True
-                    st.error(f"💀 Você perdeu! O número era {st.session_state.target_number}.")
+            st.write(f"Tentativas restantes: {st.session_state.guesses_left}")
+            st.write(st.session_state.message)
 
-        st.write(f"Tentativas restantes: {st.session_state.guesses_left}")
-        st.write(st.session_state.message)
-
-    # Acertou
-    if st.session_state.acertou_numero:
-        st.balloons()
-        if st.button("Avançar para a próxima etapa"):
-            # Reseta as variáveis do jogo imediatamente e muda a etapa
-            for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero']:
-                st.session_state.pop(key, None)
-            st.session_state.step += 1
-            st.rerun()
-
-    # Perdeu
-    elif st.session_state.perdeu_numero:
-        if st.button("Voltar para o início"):
-            for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero']:
-                st.session_state.pop(key, None)
-            st.session_state.step = 1
-            st.rerun()
-
-
-
-
-elif st.session_state.step == 6:
-    for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result']:
-        st.session_state.pop(key, None)
-
-    st.markdown("""
-        ## 🎯 Desafio 5: Decifre a Verdade
-
-        O jogo foi cruel.  
-        Mentes foram manipuladas.  
-        Alguns venceram pela lógica, outros... pela sorte.
-
-        Na sua frente, quinze afirmações. Algumas verdadeiras. Outras, falsificadas por quem controla tudo.
-
-        🧠 Sua missão: **Selecionar apenas os eventos que realmente aconteceram na série.**
-
-        Cada marcação errada pode custar tudo.  
-        Cada verdade ignorada... uma chance perdida.
-
-        Escolha com sabedoria.  
-        Confirme com coragem.  
-        E avance apenas se souber **o que foi real.**
-
-        ▲ ● ■
-        """)
-
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay loop>
-            <source src="https://www.myinstants.com/media/sounds/mingle-song-squid-game.mp3" type="audio/mpeg">
-        </audio>
-    """, unsafe_allow_html=True)
-
-    # 🎨 Estilo visual
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                        url("https://images.alphacoders.com/117/thumb-1920-1177234.jpg");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    # Lista de afirmações (aquelas que são verdadeiras devem estar nas premiadas_indices)
-    afirmacoes = [
-        "Gi-hun é o jogador número 456.",
-        "Jogadores podem usar celulares durante o jogo.",
-        "O número 001 é o criador do jogo.",
-        "O jogo da ponte envolvia vidro temperado e comum.",
-        "Sae-byeok é uma desertora da Coreia do Norte.",
-        "Jogadores vestem macacões vermelhos.",
-        "Os guardas têm símbolos geométricos nas máscaras.",
-        "O prêmio total é de 45.6 bilhões de won.",
-        "Ali salva Gi-hun durante o jogo da corda.",
-        "Gi-hun vence a última prova: o jogo do squid.",
-        "Jogadores eliminados recebem outra chance.",
-        "A moeda usada para recrutar é o won coreano.",
-        "A prova do biscoito exige cortar com uma agulha.",
-        "A série se passa numa ilha secreta.",
-        "Todos os guardas são mulheres."
-    ]
-
-
-
-    if 'boxes6' not in st.session_state:
-        total_caixas = 15
-        
-        #aqui o indice ta um pra frente, depois da pra trocar o tema tbm, de caixa pra alguma coisa q ela tenha que selecionar certo
-        #premiadas_indices = [1, 4, 8, 11, 13]  # exemplo: caixas 2,5,9,12,14
-        premiadas_indices = [0, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13]
-
-
-        caixas = [False] * total_caixas
-        for i in premiadas_indices:
-            caixas[i] = True
-
-        
-
-        st.session_state.boxes6 = caixas
-        st.session_state.selected_boxes = [False] * total_caixas
-        st.session_state.finished6 = False
-        st.session_state.result6 = None
-        st.session_state.message6 = "Selecione apenas as caixas premiadas e confirme."
-
-    st.write(st.session_state.message6)
-
-    total_caixas = len(st.session_state.boxes6)
-    cols = st.columns(5)  # 5 colunas
-
-    # Para organizar 15 caixas em 3 linhas x 5 colunas
-    for row in range(3):
-        for col_idx in range(5):
-            idx = row * 5 + col_idx
-            with cols[col_idx]:
-                label = afirmacoes[idx]
-                # Usar key única para cada checkbox
-                st.session_state.selected_boxes[idx] = st.checkbox(label, key=f"box6_{idx}", value=st.session_state.selected_boxes[idx])
-
-    if not st.session_state.finished6:
-        if st.button("Confirmar escolhas"):
-            selecionou = st.session_state.selected_boxes
-            caixas = st.session_state.boxes6
-
-            acertou = all((selecionou[i] == caixas[i]) for i in range(total_caixas))
-
-            st.session_state.finished6 = True
-            st.session_state.result6 = acertou
-            if acertou:
-                st.balloons()
-                st.session_state.message6 = "🎉 Parabéns! Você acertou todas as caixas premiadas!"
-            else:
-                st.session_state.message6 = "❌ Errou! Seleção incorreta."
-
-            st.rerun()
-
-    else:
-        if st.session_state.result6:
-            st.success(st.session_state.message6)
+        # ✅ Acertou
+        if st.session_state.acertou_numero:
             st.balloons()
-            if st.button("Avançar para a próxima fase"):
-                for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6']:
+            if st.button("➡️ Ir para a próxima fase"):
+                for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero','fase4_iniciada']:
                     st.session_state.pop(key, None)
+                    
                 st.session_state.step += 1
                 st.rerun()
-        else:
-            st.error(st.session_state.message6)
-            if st.button("Voltar ao início"):
-                for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6']:
+
+        # ❌ Perdeu
+        elif st.session_state.perdeu_numero:
+            if st.button("🔄 Voltar para o início"):
+                for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero', 'fase4_iniciada']:
                     st.session_state.pop(key, None)
+                st.session_state3 = False
+                
                 st.session_state.step = 1
                 st.rerun()
 
 elif st.session_state.step == 5:
 
+    aplicar_estilo_geral("https://images6.alphacoders.com/117/thumb-1920-1177227.jpg")
+
+    if 'message' in st.session_state:
+        st.session_state.pop('message', None)
+
     for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6']:
         st.session_state.pop(key, None)
 
-    st.markdown("""
-        ## 🎨 Desafio 4: A Sequência das Pedras
-
-        Você se aproxima de uma bancada.  
+    if mostrar_intro_fase(5, "🎨 Desafio 5: A Sequência das Pedras", """Você se aproxima de uma bancada.  
         Quatro pedrinhas coloridas repousam à sua frente: **vermelho, roxo, verde e amarelo.**
-
         No visor acima, uma sequência é revelada... por segundos.  
         Você deve memorizar cada cor, cada posição.  
         Porque depois que ela desaparecer, só restará sua memória.
-
         🧠 Esse é um teste de atenção e lógica —  
         Como os desafios infantis distorcidos pela elite mascarada.
-
         Clique nas cores na **mesma ordem exata**.  
         Repita sem hesitar.  
         Erros não serão perdoados.
-
         ⏳ Você tem apenas um momento.  
         Escolha com precisão.  
-        ▲ ● ■
-        """)
+        ▲ ● ■"""):
+
+        tocar_audio("https://www.myinstants.com/media/sounds/squid-game-jump-rope-song.mp3")
 
 
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay>
-            <source src="https://www.myinstants.com/media/sounds/squid-game-jump-rope-song.mp3" type="audio/mpeg">
-        </audio>
-    """, unsafe_allow_html=True)
-
-    # 🎨 Estilo visual
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                        url("https://images6.alphacoders.com/117/thumb-1920-1177227.jpg");
-            background-size: cover;
-            background-position: center;
-            color: white;
+        # Define caminhos locais das imagens
+        cores_possiveis = {
+            'vermelho': r"C:\Users\Usuario\Desktop\github\presente-round6\vermelho.png",
+            'roxo': r"C:\Users\Usuario\Desktop\github\presente-round6\roxo.png",
+            'verde': r"C:\Users\Usuario\Desktop\github\presente-round6\verde.png",
+            'amarelo': r"C:\Users\Usuario\Desktop\github\presente-round6\amarelo.png"
         }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    import os
-
-    # Define caminhos locais das imagens
-    cores_possiveis = {
-        'vermelho': r"C:\Users\Usuario\Desktop\github\presente-round6\vermelho.png",
-        'roxo': r"C:\Users\Usuario\Desktop\github\presente-round6\roxo.png",
-        'verde': r"C:\Users\Usuario\Desktop\github\presente-round6\verde.png",
-        'amarelo': r"C:\Users\Usuario\Desktop\github\presente-round6\amarelo.png"
-    }
 
 
-    # Inicializa sequência
-    if 'color_sequence' not in st.session_state:
-        st.session_state.color_sequence = [random.choice(list(cores_possiveis.keys())) for _ in range(5)]
-        st.session_state.start_time = time.time()
-        st.session_state.show_sequence = True
-        st.session_state.user_sequence = []
-        st.session_state.finished = False
-        st.session_state.result = None
+        # Inicializa sequência
+        if 'color_sequence' not in st.session_state:
+            st.session_state.color_sequence = [random.choice(list(cores_possiveis.keys())) for _ in range(5)]
+            st.session_state.start_time = time.time()
+            st.session_state.show_sequence = True
+            st.session_state.user_sequence = []
+            st.session_state.finished = False
+            st.session_state.result = None
 
-    tempo_passado = time.time() - st.session_state.start_time
-    tempo_limite = 10
+        tempo_passado = time.time() - st.session_state.start_time
+        tempo_limite = 10
 
-    if st.session_state.show_sequence:
-        st.write("Memorize a sequência de cores:")
-        cols = st.columns(len(st.session_state.color_sequence))
-        for i, cor in enumerate(st.session_state.color_sequence):
-            with cols[i]:
-                caminho = cores_possiveis.get(cor)
-                if caminho and os.path.exists(caminho):
-                    st.image(caminho, width=60)
-                else:
-                    st.warning(f"Imagem não encontrada: {caminho}")
-
-        tempo_restante = int(tempo_limite - tempo_passado)
-        if tempo_restante > 0:
-            st.markdown(f"⏳ Sequência desaparecerá em {tempo_restante} segundos")
-            time.sleep(1)
-            st.rerun()
-        else:
-            st.session_state.show_sequence = False
-            st.rerun()
-
-    else:
-        st.write("Clique nas pedrinhas na mesma ordem da sequência 👇")
-        cols = st.columns(len(cores_possiveis))
-
-        for i, (nome_cor, caminho_img) in enumerate(cores_possiveis.items()):
-            with cols[i]:
-                if os.path.exists(caminho_img):
-                    st.image(caminho_img, width=60)
-                else:
-                    st.warning(f"Imagem não encontrada: {caminho_img}")
-
-                if st.button(f"Selecionar {nome_cor}", key=f"botao_{nome_cor}"):
-                    if not st.session_state.finished:
-                        st.session_state.user_sequence.append(nome_cor)
-                        st.rerun()
-
-        st.write("Sequência selecionada:")
-        if st.session_state.user_sequence:
-            cols_sel = st.columns(len(st.session_state.user_sequence))
-            for i, cor in enumerate(st.session_state.user_sequence):
-                with cols_sel[i]:
+        if st.session_state.show_sequence:
+            st.write("Memorize a sequência de cores:")
+            cols = st.columns(len(st.session_state.color_sequence))
+            for i, cor in enumerate(st.session_state.color_sequence):
+                with cols[i]:
                     caminho = cores_possiveis.get(cor)
                     if caminho and os.path.exists(caminho):
                         st.image(caminho, width=60)
                     else:
                         st.warning(f"Imagem não encontrada: {caminho}")
+
+            tempo_restante = int(tempo_limite - tempo_passado)
+            if tempo_restante > 0:
+                st.markdown(f"⏳ Sequência desaparecerá em {tempo_restante} segundos")
+                time.sleep(1)
+                st.rerun()
+            else:
+                st.session_state.show_sequence = False
+                st.rerun()
+
         else:
-            st.info("🔎 Você ainda não selecionou nenhuma cor.")
+            st.write("Clique nas pedrinhas na mesma ordem da sequência 👇")
+            cols = st.columns(len(cores_possiveis))
 
-        if len(st.session_state.user_sequence) == len(st.session_state.color_sequence) and not st.session_state.finished:
-            if st.session_state.user_sequence == st.session_state.color_sequence:
-                st.success("🎉 Você acertou a sequência!")
-                st.balloons()
-                st.session_state.result = True
+            for i, (nome_cor, caminho_img) in enumerate(cores_possiveis.items()):
+                with cols[i]:
+                    if os.path.exists(caminho_img):
+                        st.image(caminho_img, width=60)
+                    else:
+                        st.warning(f"Imagem não encontrada: {caminho_img}")
+
+                    if st.button(f"Selecionar {nome_cor}", key=f"botao_{nome_cor}"):
+                        if not st.session_state.finished:
+                            st.session_state.user_sequence.append(nome_cor)
+                            st.rerun()
+
+            st.write("Sequência selecionada:")
+            if st.session_state.user_sequence:
+                cols_sel = st.columns(len(st.session_state.user_sequence))
+                for i, cor in enumerate(st.session_state.user_sequence):
+                    with cols_sel[i]:
+                        caminho = cores_possiveis.get(cor)
+                        if caminho and os.path.exists(caminho):
+                            st.image(caminho, width=60)
+                        else:
+                            st.warning(f"Imagem não encontrada: {caminho}")
             else:
-                st.error("❌ Sequência incorreta. Você perdeu!")
-                st.session_state.result = False
-            st.session_state.finished = True
+                st.info("🔎 Você ainda não selecionou nenhuma cor.")
 
-        if st.session_state.finished:
-            if st.session_state.result:
-                if st.button("Avançar para a próxima fase"):
-                    for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result']:
-                        st.session_state.pop(key, None)
-                    st.session_state.step += 1
-                    st.rerun()
-            else:
-                if st.button("Voltar ao início"):
-                    for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result']:
-                        st.session_state.pop(key, None)
-                    st.session_state.step = 1
-                    st.rerun()
+            if len(st.session_state.user_sequence) == len(st.session_state.color_sequence) and not st.session_state.finished:
+                if st.session_state.user_sequence == st.session_state.color_sequence:
+                    st.success("🎉 Você acertou a sequência!")
+                    st.balloons()
+                    st.session_state.result = True
+                else:
+                    st.error("❌ Sequência incorreta. Você perdeu!")
+                    st.session_state.result = False
+                st.session_state.finished = True
 
-elif st.session_state.step == 7:
+            if st.session_state.finished:
+                if st.session_state.result:
+                    if st.button("Avançar para a próxima fase"):
+                        for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result', 'fase5_iniciada']:
+                            st.session_state.pop(key, None)
+                        st.session_state.step += 1
+                        st.rerun()
+                else:
+                    if st.button("Voltar ao início"):
+                        for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result','fase5_iniciada']:
+                            st.session_state.pop(key, None)
+                        st.session_state.step = 1
+                        st.rerun()
+
+elif st.session_state.step == 6:
+
+    aplicar_estilo_geral("https://images.alphacoders.com/117/thumb-1920-1177234.jpg")
 
     for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result']:
         st.session_state.pop(key, None)
 
+    if mostrar_intro_fase(5, "🎯 Desafio 4: Decifre a Verdade", """O jogo foi cruel.  
+        Mentes foram manipuladas.  
+        Alguns venceram pela lógica, outros... pela sorte.
+        Na sua frente, quinze afirmações. Algumas verdadeiras. Outras, falsificadas por quem controla tudo.
+        🧠 Sua missão: **Selecionar apenas os eventos que realmente aconteceram na série.**
+        Cada marcação errada pode custar tudo.  
+        Cada verdade ignorada... uma chance perdida.
+        Escolha com sabedoria.  
+        Confirme com coragem.  
+        E avance apenas se souber **o que foi real.**
+        ▲ ● ■"""):
 
-    st.markdown("""
-    ## 🎁 Desafio 6: Escolha Corrompida
+        tocar_audio("https://www.myinstants.com/media/sounds/squid-game-tone.mp3")
 
-    O jogo te testou física e mentalmente.  
+
+        # Lista de afirmações (aquelas que são verdadeiras devem estar nas premiadas_indices)
+        afirmacoes = [
+            "Gi-hun é o jogador número 456.",
+            "Jogadores podem usar celulares durante o jogo.",
+            "O número 001 é o criador do jogo.",
+            "O jogo da ponte envolvia vidro temperado e comum.",
+            "Sae-byeok é uma desertora da Coreia do Norte.",
+            "Jogadores vestem macacões vermelhos.",
+            "Os guardas têm símbolos geométricos nas máscaras.",
+            "O prêmio total é de 45.6 bilhões de won.",
+            "Ali salva Gi-hun durante o jogo da corda.",
+            "Gi-hun vence a última prova: o jogo do squid.",
+            "Jogadores eliminados recebem outra chance.",
+            "A moeda usada para recrutar é o won coreano.",
+            "A prova do biscoito exige cortar com uma agulha.",
+            "A série se passa numa ilha secreta.",
+            "Todos os guardas são mulheres."
+        ]
+
+
+
+        if 'boxes6' not in st.session_state:
+            total_caixas = 15
+            
+            #aqui o indice ta um pra frente, depois da pra trocar o tema tbm, de caixa pra alguma coisa q ela tenha que selecionar certo
+            #premiadas_indices = [1, 4, 8, 11, 13]  # exemplo: caixas 2,5,9,12,14
+            premiadas_indices = [0, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13]
+
+
+            caixas = [False] * total_caixas
+            for i in premiadas_indices:
+                caixas[i] = True
+
+            
+
+            st.session_state.boxes6 = caixas
+            st.session_state.selected_boxes = [False] * total_caixas
+            st.session_state.finished6 = False
+            st.session_state.result6 = None
+            st.session_state.message6 = "Selecione apenas as caixas premiadas e confirme."
+
+        st.write(st.session_state.message6)
+
+        total_caixas = len(st.session_state.boxes6)
+        cols = st.columns(5)  # 5 colunas
+
+        # Para organizar 15 caixas em 3 linhas x 5 colunas
+        for row in range(3):
+            for col_idx in range(5):
+                idx = row * 5 + col_idx
+                with cols[col_idx]:
+                    label = afirmacoes[idx]
+                    # Usar key única para cada checkbox
+                    st.session_state.selected_boxes[idx] = st.checkbox(label, key=f"box6_{idx}", value=st.session_state.selected_boxes[idx])
+
+        if not st.session_state.finished6:
+            if st.button("Confirmar escolhas"):
+                selecionou = st.session_state.selected_boxes
+                caixas = st.session_state.boxes6
+
+                acertou = all((selecionou[i] == caixas[i]) for i in range(total_caixas))
+
+                st.session_state.finished6 = True
+                st.session_state.result6 = acertou
+                if acertou:
+                    st.balloons()
+                    st.session_state.message6 = "🎉 Parabéns! Você acertou todas as caixas premiadas!"
+                else:
+                    st.session_state.message6 = "❌ Errou! Seleção incorreta."
+
+                st.rerun()
+
+        else:
+            if st.session_state.result6:
+                st.success(st.session_state.message6)
+                st.balloons()
+                if st.button("Avançar para a próxima fase"):
+                    for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6', 'fase6_iniciada']:
+                        st.session_state.pop(key, None)
+                    st.session_state.step += 1
+                    st.rerun()
+            else:
+                st.error(st.session_state.message6)
+                if st.button("Voltar ao início"):
+                    for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6', 'fase6_iniciada']:
+                        st.session_state.pop(key, None)
+                    st.session_state.step = 1
+                    st.rerun()
+
+
+
+elif st.session_state.step == 7:
+
+    aplicar_estilo_geral("https://images5.alphacoders.com/138/thumb-1920-1386261.jpg")
+    if mostrar_intro_fase(7, "🎯 Desafio 6: Escolha Corrompida", """O jogo te testou física e mentalmente.  
     Agora, resta uma escolha.
-
     Três caixas misteriosas. Uma guarda a resposta.  
     Duas contêm o fim.
-
     O Front Man observa silenciosamente.  
     Ele quer saber: **você ainda é você?**
-
     📦 Você pode parar agora.  
     Mas quem abandona, sem saber o que havia dentro…  
     simplesmente desaparece. Sem glória, sem retorno.
-
     Escolher errado, é perder tudo.
-
     Escolher certo, é ganhar o jogo.  
-    Mas a dúvida sempre permanecerá: **o que te moveu a abrir?**
-    """)
+    Mas a dúvida sempre permanecerá: **o que te moveu a abrir?**"""):
+
+        tocar_audio("https://www.myinstants.com/media/sounds/salesman-squid-game-edit-audio-blah-phonk.mp3")
 
 
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay loop>
-            <source src="https://www.myinstants.com/media/sounds/salesman-squid-game-edit-audio-blah-phonk.mp3" type="audio/mpeg">
-        </audio>
-    """, unsafe_allow_html=True)
+        if 'boxes' not in st.session_state:
+            caixas = [True, False, False]
+            random.shuffle(caixas)
+            st.session_state.boxes = caixas
+            st.session_state.opened = [False, False, False]
+            st.session_state.game_over = False
+            st.session_state.message = "Escolha uma caixa para abrir."
+            st.session_state.result = None
+            st.session_state.saiu_sem_jogar = False
 
-    # 🎨 Estilo visual
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                        url("https://images5.alphacoders.com/138/thumb-1920-1386261.jpg");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
+        cols = st.columns(3)
 
-    if 'boxes' not in st.session_state:
-        caixas = [True, False, False]
-        random.shuffle(caixas)
-        st.session_state.boxes = caixas
-        st.session_state.opened = [False, False, False]
-        st.session_state.game_over = False
-        st.session_state.message = "Escolha uma caixa para abrir."
-        st.session_state.result = None
-        st.session_state.saiu_sem_jogar = False
-
-    cols = st.columns(3)
-
-    for i in range(3):
-        with cols[i]:
-            if st.session_state.opened[i]:
-                if st.session_state.boxes[i]:
-                    st.success("🎉 Prêmio escondido! Você escolheu certo.")
-                    st.session_state.result = True
+        for i in range(3):
+            with cols[i]:
+                if st.session_state.opened[i]:
+                    if st.session_state.boxes[i]:
+                        st.success("🎉 Prêmio escondido! Você escolheu certo.")
+                        st.session_state.result = True
+                    else:
+                        st.error("💥 Armadilha! Fim da linha.")
+                        st.session_state.result = False
+                        st.session_state.game_over = True
                 else:
-                    st.error("💥 Armadilha! Fim da linha.")
-                    st.session_state.result = False
-                    st.session_state.game_over = True
-            else:
-                if not st.session_state.game_over and st.session_state.result is None:
-                    if st.button(f"Abrir Caixa {i+1}", key=f"box_{i}"):
-                        st.session_state.opened[i] = True
-                        if st.session_state.boxes[i]:
-                            st.session_state.message = "🎉 Você encontrou o prêmio. Pode avançar."
-                        else:
-                            st.session_state.message = "💥 Armadilha! Você perdeu tudo."
-                        st.rerun()
+                    if not st.session_state.game_over and st.session_state.result is None:
+                        if st.button(f"Abrir Caixa {i+1}", key=f"box_{i}"):
+                            st.session_state.opened[i] = True
+                            if st.session_state.boxes[i]:
+                                st.session_state.message = "🎉 Você encontrou o prêmio. Pode avançar."
+                            else:
+                                st.session_state.message = "💥 Armadilha! Você perdeu tudo."
+                            st.rerun()
 
-    st.write(st.session_state.message)
+        st.write(st.session_state.message)
 
-    # Jogadora opta por sair sem abrir
-    if st.session_state.result is None and not any(st.session_state.opened):
-        if st.button("Desistir do jogo e sair"):
-            st.session_state.saiu_sem_jogar = True
-            st.rerun()
+        # Jogadora opta por sair sem abrir
+        if st.session_state.result is None and not any(st.session_state.opened):
+            if st.button("Desistir do jogo e sair"):
+                st.session_state.saiu_sem_jogar = True
+                st.rerun()
 
-    if st.session_state.saiu_sem_jogar:
-        st.error("🩸 Você lutou tanto… e escolheu desaparecer. Nenhuma resposta. Nenhum avanço.")
-        if st.button("Voltar ao início"):
-            for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar']:
-                st.session_state.pop(key, None)
-            st.session_state.step = 1
-            st.rerun()
+        if st.session_state.saiu_sem_jogar:
+            st.error("🩸 Você lutou tanto… e escolheu desaparecer. Nenhuma resposta. Nenhum avanço.")
+            if st.button("Voltar ao início"):
+                for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar', 'fase7_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state.step = 1
+                st.rerun()
 
-    # Se venceu
-    if st.session_state.result is True:
-        if st.button("Avançar para a próxima fase"):
-            for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar']:
-                st.session_state.pop(key, None)
-            st.session_state.step += 1
-            st.rerun()
+        # Se venceu
+        if st.session_state.result is True:
+            if st.button("Avançar para a próxima fase"):
+                for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar', 'fase7_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state.step += 1
+                st.rerun()
 
-    # Se perdeu
-    if st.session_state.result is False:
-        st.error("Fim do jogo. Você perdeu tudo.")
-        if st.button("Voltar ao início"):
-            for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar']:
-                st.session_state.pop(key, None)
-            st.session_state.step = 1
-            st.rerun()
+        # Se perdeu
+        if st.session_state.result is False:
+            st.error("Fim do jogo. Você perdeu tudo.")
+            if st.button("Voltar ao início"):
+                for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar', 'fase7_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state.step = 7
+                st.rerun()
 
 
 elif st.session_state.step ==8:
 
 
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay loop>
-            <source src="https://www.myinstants.com/media/sounds/congratulations-squid-game.mp3" type="audio/mpeg">
-        </audio>
-    """, unsafe_allow_html=True)
+    aplicar_estilo_geral("https://images.alphacoders.com/118/thumb-1920-1183834.jpg")
 
-    # 🎨 Estilo visual
-    st.markdown("""
-        <style>
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                        url("https://images.alphacoders.com/118/thumb-1920-1183834.jpg");
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
+    def mostrar_intro_fase_ultima(step, titulo, descricao):
+        flag = f"fase{step}_iniciada"
+        if flag not in st.session_state:
+            st.session_state[flag] = False
 
-    st.markdown("""
-    <div style="text-align:center; font-size:40px; color:#FFB6C1; margin-top:50px;">
-        <strong>🎉 PARABÉNS!</strong><br><br>
-        Você enfrentou cada enigma, cada armadilha, e chegou até aqui.<br>
+        if not st.session_state[flag]:
+            st.markdown(f"## {titulo}")
+            st.markdown(f"<p style='white-space:pre-line;'>{descricao}</p>", unsafe_allow_html=True)
+            if st.button("🔓 MOSTRAR SENHA"):
+                st.session_state[flag] = True
+                st.rerun()
+            return False
+        return True
+
+    if mostrar_intro_fase_ultima(8, "🎉 PARABÉNS!", """ Você enfrentou cada enigma, cada armadilha, e chegou até aqui.<br>
         Provou coragem, raciocínio e coração.<br><br>
-        Agora, diante de você, está a última barreira:
-    </div>
-    """, unsafe_allow_html=True)
+        Agora, pegue seu premio:"""):
+        tocar_audio("https://www.myinstants.com/media/sounds/congratulations-squid-game.mp3")
 
-    # Exibe os três números grandes centralizados
-    numeros_cadeado = [7, 4, 2]  # Exemplo de chave — você pode trocar
+        # Exibe os três números grandes centralizados
+        numeros_cadeado = [7, 4, 2]  # Exemplo de chave — você pode trocar
 
-    st.markdown(f"""
-    <div style="text-align:center; margin-top:60px;">
-        <span style="font-size:80px; font-weight:bold; color:#FFD700; letter-spacing:20px;">
-            {numeros_cadeado[0]} &nbsp;&nbsp; {numeros_cadeado[1]} &nbsp;&nbsp; {numeros_cadeado[2]}
-        </span><br><br>
-        <span style="font-size:22px; color:#ffffff;">🔐 Essa é a chave. Use-a para abrir seu presente.</span>
-    </div>
-    """, unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="text-align:center; margin-top:60px;">
+            <span style="font-size:80px; font-weight:bold; color:#FFD700; letter-spacing:20px;">
+                {numeros_cadeado[0]} &nbsp;&nbsp; {numeros_cadeado[1]} &nbsp;&nbsp; {numeros_cadeado[2]}
+            </span><br><br>
+            <span style="font-size:22px; color:#ffffff;">🔐 Essa é a chave. Use-a para abrir seu presente.</span>
+        </div>
+        """, unsafe_allow_html=True)
 
