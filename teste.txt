@@ -25,14 +25,6 @@ st.set_page_config(page_title="Round 6 - Gabrielle", page_icon="🎮")
 if st.session_state.step == 1:
     st.title("Round 6: Desafios Iniciados")
 
-    # 🎧 Som ambiente
-    st.markdown("""
-        <audio autoplay loop>
-            <source src="audio/squid-game-announcement-sound.mp3" type="audio/mpeg">
-        </audio>
-        """, unsafe_allow_html=True)
-
-
     st.markdown("""
     ### Seja bem-vinda, Jogadora Gabrielle (097).
 
@@ -42,7 +34,7 @@ if st.session_state.step == 1:
 
     ⏳ A partir deste momento, você enfrentará testes de memória, lógica, coragem... e talvez até um pouco de sorte.
                 
-    🔊 Aumente o volume do celular. Os sons fazem parte da experiência! E deite seu celular!
+    🔊 Aumente o volume do celular. Os sons fazem parte da experiência!
                 
     📜 Siga cada instrução. Com atenção cirúrgica... Errar pode ter consequências. Ou não. Só há uma forma de descobrir.
 
@@ -50,7 +42,12 @@ if st.session_state.step == 1:
 
     🎮 **Você aceita participar do jogo?**  
     """)
-    
+    # 🎧 Som ambiente
+    st.markdown("""
+        <audio autoplay>
+            <source src="https://www.myinstants.com/media/sounds/squid-game-announcement-sound.mp3" type="audio/mpeg">
+        </audio>
+    """, unsafe_allow_html=True)
     st.markdown(
         """
         <style>
@@ -268,7 +265,7 @@ elif st.session_state.step == 3:
     # 🎧 Som ambiente
     st.markdown("""
         <audio autoplay loop>
-            <source src="https://www.myinstants.com/media/sounds/10-second-squid-game-timer.mp3" type="audio/mpeg">
+            <source src="https://www.myinstants.com/media/sounds/mingle-song-squid-game.mp3" type="audio/mpeg">
         </audio>
     """, unsafe_allow_html=True)
 
@@ -425,7 +422,7 @@ elif st.session_state.step == 4:
         🧠 Cada palpite é uma escolha.  
         🔐 Cada tentativa, uma chance que escapa.
 
-        Você terá **4 tentativas** para descobrir o número exato.  
+        Você terá **5 tentativas** para descobrir o número exato.  
         Se errar, a máquina responde: _Muito alto._ Ou _Muito baixo._  
         Mas ela nunca revela se está perto… ou longe.
 
@@ -479,7 +476,7 @@ elif st.session_state.step == 4:
 
     if 'target_number' not in st.session_state:
         st.session_state.target_number = random.randint(1, 20)
-        st.session_state.guesses_left = 4
+        st.session_state.guesses_left = 5
         st.session_state.message = ""
         st.session_state.acertou_numero = False
         st.session_state.perdeu_numero = False
@@ -493,13 +490,6 @@ elif st.session_state.step == 4:
             if guess == st.session_state.target_number:
                 st.success(f"🎉 Parabéns! Você acertou o número {st.session_state.target_number}!")
                 st.session_state.acertou_numero = True
-
-                # Avança automaticamente
-                for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero']:
-                    st.session_state.pop(key, None)
-                st.session_state.step += 1
-                st.rerun()
-
             else:
                 st.session_state.guesses_left -= 1
                 if guess < st.session_state.target_number:
@@ -535,12 +525,9 @@ elif st.session_state.step == 4:
 
 
 
-elif st.session_state.step == 6:
-    for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result']:
-        st.session_state.pop(key, None)
-
+elif st.session_state.step == 5:
     st.markdown("""
-        ## 🎯 Desafio 5: Decifre a Verdade
+        ## 🎯 Desafio 4: Decifre a Verdade
 
         O jogo foi cruel.  
         Mentes foram manipuladas.  
@@ -563,7 +550,7 @@ elif st.session_state.step == 6:
     # 🎧 Som ambiente
     st.markdown("""
         <audio autoplay loop>
-            <source src="https://www.myinstants.com/media/sounds/mingle-song-squid-game.mp3" type="audio/mpeg">
+            <source src="https://www.myinstants.com/media/sounds/squid-game-hide-and-seek-song.mp3" type="audio/mpeg">
         </audio>
     """, unsafe_allow_html=True)
 
@@ -684,13 +671,9 @@ elif st.session_state.step == 6:
                 st.session_state.step = 1
                 st.rerun()
 
-elif st.session_state.step == 5:
-
-    for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6']:
-        st.session_state.pop(key, None)
-
+elif st.session_state.step == 6:
     st.markdown("""
-        ## 🎨 Desafio 4: A Sequência das Pedras
+        ## 🎨 Desafio 5: A Sequência das Pedras
 
         Você se aproxima de uma bancada.  
         Quatro pedrinhas coloridas repousam à sua frente: **vermelho, roxo, verde e amarelo.**
@@ -714,7 +697,7 @@ elif st.session_state.step == 5:
 
     # 🎧 Som ambiente
     st.markdown("""
-        <audio autoplay>
+        <audio autoplay loop>
             <source src="https://www.myinstants.com/media/sounds/squid-game-jump-rope-song.mp3" type="audio/mpeg">
         </audio>
     """, unsafe_allow_html=True)
@@ -769,7 +752,7 @@ elif st.session_state.step == 5:
         st.session_state.result = None
 
     tempo_passado = time.time() - st.session_state.start_time
-    tempo_limite = 10
+    tempo_limite = 5
 
     if st.session_state.show_sequence:
         st.write("Memorize a sequência de cores:")
@@ -845,10 +828,6 @@ elif st.session_state.step == 5:
                     st.rerun()
 
 elif st.session_state.step == 7:
-
-    for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result']:
-        st.session_state.pop(key, None)
-
 
     st.markdown("""
     ## 🎁 Desafio 6: Escolha Corrompida
