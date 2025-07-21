@@ -410,10 +410,10 @@ elif st.session_state.step == 5:
 
         # Define caminhos locais das imagens
         cores_possiveis = {
-            'vermelho': r"C:\Users\Usuario\Desktop\github\presente-round6\vermelho.png",
-            'roxo': r"C:\Users\Usuario\Desktop\github\presente-round6\roxo.png",
-            'verde': r"C:\Users\Usuario\Desktop\github\presente-round6\verde.png",
-            'amarelo': r"C:\Users\Usuario\Desktop\github\presente-round6\amarelo.png"
+            'vermelho': "imagens/vermelho.png",
+            'roxo': "imagens/roxo.png",
+            'verde': "imagens/verde.png",
+            'amarelo': "imagens/amarelo.png"
         }
 
 
