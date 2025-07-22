@@ -83,7 +83,7 @@ if st.session_state.step == 1:
 
     ⏳ A partir deste momento, você enfrentará testes de memória, lógica, coragem... e talvez até um pouco de sorte.
                 
-    🔊 Aumente o volume do celular. Os sons fazem parte da experiência! E deite seu celular!
+    🔊 Aumente o volume do celular. Os sons fazem parte da experiência!
                 
     📜 Siga cada instrução. Com atenção cirúrgica... Errar pode ter consequências. Ou não. Só há uma forma de descobrir.
 
@@ -388,7 +388,7 @@ elif st.session_state.step == 5:
     for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6']:
         st.session_state.pop(key, None)
 
-    if mostrar_intro_fase(5, "🎨 Desafio 5: A Sequência das Pedras", """Você se aproxima de uma bancada.  
+    if mostrar_intro_fase(5, "🎨 Desafio 4: A Sequência das Pedras", """Você se aproxima de uma bancada.  
         Quatro pedrinhas coloridas repousam à sua frente: **vermelho, roxo, verde e amarelo.**
         No visor acima, uma sequência é revelada... por segundos.  
         Você deve memorizar cada cor, cada posição.  
@@ -505,7 +505,7 @@ elif st.session_state.step == 6:
     for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result']:
         st.session_state.pop(key, None)
 
-    if mostrar_intro_fase(5, "🎯 Desafio 4: Decifre a Verdade", """O jogo foi cruel.  
+    if mostrar_intro_fase(5, "🎯 Desafio 5: Decifre a Verdade", """O jogo foi cruel.  
         Mentes foram manipuladas.  
         Alguns venceram pela lógica, outros... pela sorte.
         Na sua frente, quinze afirmações. Algumas verdadeiras. Outras, falsificadas por quem controla tudo.
@@ -718,7 +718,7 @@ elif st.session_state.step ==8:
         Agora, pegue seu premio:"""):
         tocar_audio("https://www.myinstants.com/media/sounds/congratulations-squid-game.mp3")
         st.image("static/imagens/Gaby_uniforme.png", use_container_width=True)
-        st.markdown("<h2 style='text-align:center; color:white;'>Jogadora 097 eliminada</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:white;'>Jogadora 097 venceu!</h2>", unsafe_allow_html=True)
 
 
 
