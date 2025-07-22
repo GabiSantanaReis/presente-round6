@@ -181,10 +181,10 @@ elif st.session_state.step == 2:
                         st.rerun()
                 else:
                     st.error("💀 Você perdeu! Respostas incorretas ou tempo esgotado.")
-                    st.session_state.step = 9
-                    for key in ['desafio1_iniciado', 'start_time', 'finished', 'acertou_tudo', 'fase2_iniciada'] + list(perguntas.keys()):
-                        st.session_state.pop(key, None)
-                            
+                    if st.button("Tentar de novo"):
+                        st.session_state.step = 1
+                        for key in ['desafio1_iniciado', 'start_time', 'finished', 'acertou_tudo', 'fase2_iniciada'] + list(perguntas.keys()):
+                            st.session_state.pop(key, None)
                         st.rerun()
 
             if not st.session_state.finished:
@@ -302,13 +302,14 @@ elif st.session_state.step == 3:
         # 💀 Derrota por tempo
         if st.session_state.memory_finished and st.session_state.pairs_found < len(st.session_state.cards) // 2:
             st.error("Você perdeu! Tempo esgotado ou pares insuficientes.")
-            for key in ['cards', 'revealed', 'first_choice', 'second_choice',
-                        'pairs_found', 'message', 'memory_started',
-                        'memory_finished', 'aguardando_reset', 'aguardando_exibicao_par', 'fase3_iniciada']:
-                st.session_state.pop(key, None)
-            st.session_state3 = False
-            st.session_state.step = 9  # Ou volte para 1 se quiser reiniciar o jogo inteiro
-            st.rerun()
+            if st.button("Tentar novamente"):
+                for key in ['cards', 'revealed', 'first_choice', 'second_choice',
+                            'pairs_found', 'message', 'memory_started',
+                            'memory_finished', 'aguardando_reset', 'aguardando_exibicao_par', 'fase3_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state3 = False
+                st.session_state.step = 1  # Ou volte para 1 se quiser reiniciar o jogo inteiro
+                st.rerun()
 
 
 
@@ -371,12 +372,13 @@ O jogo continua… **sem você**.
 
         # ❌ Perdeu
         elif st.session_state.perdeu_numero:
-            for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero', 'fase4_iniciada']:
-                st.session_state.pop(key, None)
-            st.session_state3 = False
-            
-            st.session_state.step = 9
-            st.rerun()
+            if st.button("🔄 Voltar para o início"):
+                for key in ['target_number', 'guesses_left', 'message', 'acertou_numero', 'perdeu_numero', 'palpite_numero', 'fase4_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state3 = False
+                
+                st.session_state.step = 1
+                st.rerun()
 
 elif st.session_state.step == 5:
 
@@ -493,10 +495,11 @@ elif st.session_state.step == 5:
                         st.session_state.step += 1
                         st.rerun()
                 else:
-                    for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result','fase5_iniciada']:
-                        st.session_state.pop(key, None)
-                    st.session_state.step = 9
-                    st.rerun()
+                    if st.button("Voltar ao início"):
+                        for key in ['color_sequence', 'start_time', 'show_sequence', 'user_sequence', 'finished', 'result','fase5_iniciada']:
+                            st.session_state.pop(key, None)
+                        st.session_state.step = 1
+                        st.rerun()
 
 elif st.session_state.step == 6:
 
@@ -603,10 +606,11 @@ elif st.session_state.step == 6:
                     st.rerun()
             else:
                 st.error(st.session_state.message6)
-                for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6', 'fase6_iniciada']:
-                    st.session_state.pop(key, None)
-                st.session_state.step = 9
-                st.rerun()
+                if st.button("Voltar ao início"):
+                    for key in ['boxes6', 'selected_boxes', 'finished6', 'result6', 'message6', 'fase6_iniciada']:
+                        st.session_state.pop(key, None)
+                    st.session_state.step = 1
+                    st.rerun()
 
 
 
@@ -671,11 +675,11 @@ elif st.session_state.step == 7:
 
         if st.session_state.saiu_sem_jogar:
             st.error("🩸 Você lutou tanto… e escolheu desaparecer. Nenhuma resposta. Nenhum avanço.")
-            
-            for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar', 'fase7_iniciada']:
-                st.session_state.pop(key, None)
-            st.session_state.step = 9
-            st.rerun()
+            if st.button("Voltar ao início"):
+                for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar', 'fase7_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state.step = 1
+                st.rerun()
 
         # Se venceu
         if st.session_state.result is True:
@@ -688,10 +692,11 @@ elif st.session_state.step == 7:
         # Se perdeu
         if st.session_state.result is False:
             st.error("Fim do jogo. Você perdeu tudo.")
-            for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar', 'fase7_iniciada']:
-                st.session_state.pop(key, None)
-            st.session_state.step = 9
-            st.rerun()
+            if st.button("Voltar ao início"):
+                for key in ['boxes', 'opened', 'game_over', 'message', 'result', 'saiu_sem_jogar', 'fase7_iniciada']:
+                    st.session_state.pop(key, None)
+                st.session_state.step = 7
+                st.rerun()
 
 
 elif st.session_state.step ==8:
@@ -717,10 +722,6 @@ elif st.session_state.step ==8:
         Provou coragem, raciocínio e coração.<br><br>
         Agora, pegue seu premio:"""):
         tocar_audio("https://www.myinstants.com/media/sounds/congratulations-squid-game.mp3")
-        st.image("static/imagens/Gaby_uniforme.png", use_container_width=True)
-        st.markdown("<h2 style='text-align:center; color:white;'>Jogadora 097 eliminada</h2>", unsafe_allow_html=True)
-
-
 
         # Exibe os três números grandes centralizados
         numeros_cadeado = [7, 4, 2]  # Exemplo de chave — você pode trocar
@@ -734,48 +735,3 @@ elif st.session_state.step ==8:
         </div>
         """, unsafe_allow_html=True)
 
-
-elif st.session_state.step == 9:
-
-    # Fundo preto e estilo do botão
-    st.markdown("""
-        <style>
-        .stApp {
-            background-color: black;
-        }
-        div.stButton > button:first-child {
-            background-color: #c71585;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 28px;
-            box-shadow: 0px 0px 12px #c71585;
-            transition: 0.3s ease;
-        }
-        div.stButton > button:first-child:hover {
-            background-color: #d94bbb;
-            box-shadow: 0px 0px 18px #d94bbb;
-            transform: scale(1.05);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Define largura desejada
-    botao_largura_px = 400
-
-    # Container que centraliza tudo
-    st.markdown(f'<div style="width: {botao_largura_px}px; margin: 0 auto; text-align: center;">', unsafe_allow_html=True)
-
-    st.image("static/imagens/gaby_eliminada.png", width=botao_largura_px)
-    st.markdown("<h2 style='color:white;'>Jogadora 097 eliminada</h2>", unsafe_allow_html=True)
-
-    if st.button("🔁 Tentar de novo", key="botao_estilizado"):
-        st.session_state.step = 1
-        for k in list(st.session_state.keys()):
-            if k != "step":
-                del st.session_state[k]
-        st.rerun()
-
-    st.markdown('</div>', unsafe_allow_html=True)
