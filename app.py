@@ -727,7 +727,7 @@ elif st.session_state.step ==8:
 
         st.markdown(f"""
         <div style="text-align:center; margin-top:60px;">
-            <span style="font-size:80px; font-weight:bold; color:#FFD700; letter-spacing:20px;">
+            <span style="font-size:60px; font-weight:bold; color:#FFD700; letter-spacing:20px;">
                 {numeros_cadeado[0]} &nbsp;&nbsp; {numeros_cadeado[1]} &nbsp;&nbsp; {numeros_cadeado[2]}
             </span><br><br>
             <span style="font-size:22px; color:#ffffff;">🔐 Essa é a chave. Use-a para abrir seu presente.</span>
