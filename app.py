@@ -126,7 +126,7 @@ elif st.session_state.step == 2:
         # Conteúdo principal após clique
         if st.session_state.get("desafio1_iniciado"):
             tempo_passado = time.time() - st.session_state.start_time
-            tempo_restante = int(20 - tempo_passado)
+            tempo_restante = int(60 - tempo_passado)
 
 
             if not st.session_state.finished:
@@ -232,7 +232,7 @@ elif st.session_state.step == 3:
         # ⏳ Timer
         if not st.session_state.memory_finished:
             tempo_passado = time.time() - st.session_state.memory_started
-            tempo_restante = int(30 - tempo_passado)
+            tempo_restante = int(60 - tempo_passado)
             if tempo_restante <= 0:
                 st.session_state.memory_finished = True
                 st.session_state.message = "⏰ Tempo esgotado! Você perdeu esse desafio."
@@ -723,7 +723,7 @@ elif st.session_state.step ==8:
 
 
         # Exibe os três números grandes centralizados
-        numeros_cadeado = [7, 4, 2]  # Exemplo de chave — você pode trocar
+        numeros_cadeado = [4, 5, 6]  # Exemplo de chave — você pode trocar
 
         st.markdown(f"""
         <div style="text-align:center; margin-top:60px;">
